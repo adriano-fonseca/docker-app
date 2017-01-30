@@ -1,0 +1,30 @@
+# docker container run --name db --rm -p 5432:5432 -v /home/adriano-fonseca/docker/docker-postgres/postgresql/:/var/lib/postgresql -e DB_USER=app -e DB_PASS=app -e DB_NAME=app sameersbn/postgresql:9.5-3
+# docker container run --name app --rm -p 8080:8080 -p 9990:9990 --link db:postgres adrianofonseca/app
+version: "3"
+services:
+  app:
+    image: adrianofonseca/app
+    ports:
+     - "8081:8080"
+     - "9990:9990"
+    links:
+     - postgres:postgres
+
+  postgres:
+    image: adrianofonseca/postgres:9.5
+    ports:
+        - "5432:5432"
+    environment:
+        - DEBUG=false
+        - DB_USER=app
+        - DB_PASS=app
+        - DB_NAME=app
+        - DB_TEMPLATE=
+        - DB_EXTENSION=
+
+        - REPLICATION_MODE=
+        - REPLICATION_USER=
+        - REPLICATION_PASS=
+        - REPLICATION_SSLMODE=
+    volumes:
+        - ./postgresql:/var/lib/postgresql
