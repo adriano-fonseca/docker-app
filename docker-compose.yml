@@ -24,5 +24,3 @@ postgres:
         - REPLICATION_SSLMODE=
     volumes:
         - ./postgresql:/var/lib/postgresql
-        
-        
