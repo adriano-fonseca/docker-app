@@ -1,0 +1,37 @@
+version: "3"
+services:
+  app:
+    image: adrianofonseca/app
+    ports:
+     - "8081:8080"
+     - "9990:9990"
+    networks:
+      - app
+
+  postgres:
+    image: adrianofonseca/postgres:9.5
+    ports:
+        - "5432:5432"
+    environment:
+        - DEBUG=false
+        - DB_USER=app
+        - DB_PASS=app
+        - DB_NAME=app
+        - DB_TEMPLATE=
+        - DB_EXTENSION=
+
+        - REPLICATION_MODE=
+        - REPLICATION_USER=
+        - REPLICATION_PASS=
+        - REPLICATION_SSLMODE=
+    volumes:
+        - db-data:/var/lib/postgresql
+    networks:
+        - app
+
+networks:
+      app:
+
+volumes:
+  db-data:
+  
