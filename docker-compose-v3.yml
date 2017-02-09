@@ -30,10 +30,12 @@ services:
         - db-data:/var/lib/postgresql
     networks:
         - app
+    deploy:
+      placement:
+        constraints: [node.role == manager]
 
 networks:
       app:
 
 volumes:
   db-data:
-  
