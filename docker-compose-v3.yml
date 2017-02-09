@@ -3,10 +3,12 @@ services:
   app:
     image: adrianofonseca/app
     ports:
-     - "8081:8080"
+     - "8080:8080"
      - "9990:9990"
     networks:
       - app
+    depends_on:
+      - postgres	
 
   postgres:
     image: adrianofonseca/postgres:9.5
