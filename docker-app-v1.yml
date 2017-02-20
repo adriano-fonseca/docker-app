@@ -10,8 +10,23 @@ services:
     depends_on:
       - postgres
     deploy:
-      replicas: 2
-      labels: [info=backend]	
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure	
+      labels: [info=backend]
+       # service resource management
+      resources:
+        # Hard limit - Docker does not allow to allocate more
+        limits:
+          cpus: '0.7'
+          memory: 512M
+        # Soft limit - Docker makes best effort to return to it
+        reservations:
+          cpus: '0.5'
+          memory: 256M	
 
   postgres:
     image: adrianofonseca/postgres:9.5
